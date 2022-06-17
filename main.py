@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
 import json
 
 sample_data = [
@@ -31,12 +32,14 @@ class Scraper:
             latitude = json_dict['restaurant']['latitude']
             longitude = json_dict['restaurant']['longitude']
             cuisine_tags = json_dict['restaurant']['cuisineString'].split(',')
-            menu_items = {}
+            menu_items = []
             for item in json_dict['menuData']['items']:
-                menu_items['item_name'] = item['name']
-                menu_items['item_description'] = item['description']
-                menu_items['item_price'] = item['price']
-                menu_items['items_image'] = item['image']
+                menu_item = {}
+                menu_item['item_name'] = item['name']
+                menu_item['item_description'] = item['description']
+                menu_item['item_price'] = item['price']
+                menu_item['items_image'] = item['image']
+                menu_items.append(menu_item)
             self.restaurant_data.append([{'restaurant_name': restaurant_name}, {'restaurant_logo': restaurant_logo}, {
                                         'latitude': latitude}, {'longitude': longitude}, {'cuisine_tags': cuisine_tags}, {'menu_items': menu_items}])
         self.pretty_print()
