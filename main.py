@@ -20,7 +20,9 @@ class Scraper:
         print("Please Wait...")
         for url in self.urls:
             resp = requests.get(url)
-            # handle 404
+            if resp.status_code != 200:
+                print(f"URL Not Found!: {url}")
+                break
             soup = BeautifulSoup(resp.content, 'html.parser')
             json_dict = json.loads(soup.find('script', {'id': '__NEXT_DATA__'}).contents[0])[
                 'props']['pageProps']['initialMenuState']
