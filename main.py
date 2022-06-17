@@ -28,7 +28,7 @@ class Scraper:
             restaurant_logo = json_dict['restaurant']['logo']
             latitude = json_dict['restaurant']['latitude']
             longitude = json_dict['restaurant']['longitude']
-            cuisine_tags = json_dict['restaurant']['cuisineString']
+            cuisine_tags = json_dict['restaurant']['cuisineString'].split(',')
             menu_items = {}
             for item in json_dict['menuData']['items']:
                 menu_items['item_name'] = item['name']
